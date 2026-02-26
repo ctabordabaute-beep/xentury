@@ -3,22 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Xentury | Artificial Inteligence</title>
+    
+    <title>Xentury AI</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
+
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         :root { --bg-dark: #09090b; --sidebar: #000000; --accent: #3b82f6; }
-        body { background-color: var(--bg-dark); color: #ececec; font-family: 'Inter', sans-serif; height: 100vh; display: flex; overflow: hidden; }
+        
+        /* 2. FIX PARA MÓVIL: Evita que el teclado empuje todo hacia afuera */
+        html, body { 
+            background-color: var(--bg-dark); 
+            color: #ececec; 
+            font-family: 'Inter', sans-serif; 
+            height: 100%; 
+            width: 100%;
+            overflow: hidden; 
+            position: fixed; 
+        }
+
         .sidebar { width: 0; background-color: var(--sidebar); border-right: 1px solid rgba(255,255,255,0.1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; opacity: 0; }
         .sidebar.active { width: 260px; opacity: 1; }
-        @media (max-width: 768px) { .sidebar { position: absolute; z-index: 100; height: 100%; } }
+        
+        @media (max-width: 768px) { 
+            .sidebar { position: absolute; z-index: 100; height: 100%; background-color: #000; } 
+            .msg-user { max-width: 85%; }
+        }
+
         .msg-user { background: #2f2f2f; border-radius: 1.5rem; padding: 0.8rem 1.2rem; margin-left: auto; max-width: 80%; animation: slideUp 0.2s ease; }
         .msg-bot { max-width: 90%; padding: 1rem 0; animation: slideUp 0.3s ease; }
-        .attachment-menu { display: none; position: absolute; bottom: 70px; left: 0; background: #18181b; border: 1px solid #27272a; border-radius: 1rem; padding: 0.5rem; z-index: 50; }
+        
+        .attachment-menu { display: none; position: absolute; bottom: 85px; left: 0; background: #18181b; border: 1px solid #27272a; border-radius: 1rem; padding: 0.5rem; z-index: 50; }
         .attachment-menu.active { display: block; animation: slideUp 0.2s ease; }
+        
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .typing-cursor::after { content: '|'; animation: blink 1s infinite; }
@@ -51,7 +73,7 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col min-w-0 relative">
+    <main class="flex-1 flex flex-col min-w-0 relative h-full">
         <nav class="h-14 border-b border-white/5 flex items-center justify-between px-4">
             <div class="flex items-center gap-3">
                 <button onclick="toggleSidebar()" class="p-2 hover:bg-white/5 rounded-lg"><i class="fas fa-bars-staggered"></i></button>
@@ -73,7 +95,7 @@
             </div>
         </div>
 
-        <div class="p-4 md:pb-8">
+        <div class="p-2 md:p-4 bg-[#09090b]">
             <div class="max-w-3xl mx-auto relative">
                 <div id="attachMenu" class="attachment-menu w-48 shadow-2xl">
                     <label class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg cursor-pointer transition">
@@ -86,7 +108,7 @@
                     </label>
                 </div>
 
-                <div class="bg-[#212121] rounded-[26px] border border-white/10 shadow-2xl focus-within:border-white/20">
+                <div class="bg-[#212121] rounded-[22px] border border-white/10 shadow-2xl focus-within:border-white/20">
                     <div id="previewArea" class="hidden p-3 border-b border-white/5">
                         <div class="relative w-14 h-14 rounded-lg overflow-hidden border border-white/10">
                             <img id="imgPreview" src="" class="w-full h-full object-cover">
@@ -94,14 +116,20 @@
                             <button onclick="clearFile()" class="absolute top-0 right-0 bg-black/60 p-1 text-[8px] hover:text-red-500"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
-                    <div class="flex items-end p-2 gap-2">
+                    <div class="flex items-end p-2 gap-1">
                         <button onclick="toggleAttach()" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white"><i class="fas fa-plus-circle text-xl"></i></button>
                         <button id="micBtn" onclick="toggleMic()" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition"><i class="fas fa-microphone text-lg"></i></button>
                         
-                        <textarea id="userInput" rows="1" placeholder="Mensaje a Xentury..." class="flex-1 bg-transparent border-none focus:ring-0 py-3 text-sm resize-none max-h-40"></textarea>
-                        <button onclick="sendMsg()" id="sendBtn" class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition"><i class="fas fa-arrow-up"></i></button>
+                        <textarea id="userInput" rows="1" placeholder="Mensaje a Xentury..." 
+                            class="flex-1 bg-transparent border-none focus:ring-0 py-3 text-[16px] md:text-sm resize-none max-h-32"></textarea>
+                        
+                        <button onclick="sendMsg()" id="sendBtn" class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition flex-shrink-0"><i class="fas fa-arrow-up"></i></button>
                     </div>
                 </div>
+                
+                <p class="text-[10px] text-gray-500 text-center mt-2 font-medium opacity-80">
+                    Xentury puede cometer errores. Considera verificar la información importante.
+                </p>
             </div>
         </div>
     </main>
@@ -109,7 +137,7 @@
     <div id="configModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
         <div class="bg-[#171717] p-8 rounded-[32px] border border-white/10 w-full max-w-md shadow-2xl">
             <h3 class="text-xl font-bold mb-4">Personalidad de la IA 🧠</h3>
-            <textarea id="systemPrompt" class="w-full h-32 bg-black/40 border border-white/10 rounded-xl p-4 text-sm focus:ring-1 focus:ring-blue-500 outline-none resize-none mb-6" placeholder="Ej: Háblame como un programador senior de Caracas..."></textarea>
+            <textarea id="systemPrompt" class="w-full h-32 bg-black/40 border border-white/10 rounded-xl p-4 text-sm focus:ring-1 focus:ring-blue-500 outline-none resize-none mb-6" placeholder="Ej: Háblame como un programador senior..."></textarea>
             <div class="flex gap-2">
                 <button onclick="saveConfig()" class="flex-1 bg-blue-600 p-3 rounded-xl font-bold text-sm">Guardar Memoria</button>
                 <button onclick="closeConfig()" class="px-6 bg-white/5 rounded-xl text-xs">Cerrar</button>
@@ -120,7 +148,7 @@
     <div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
         <div class="bg-[#171717] p-8 rounded-[32px] border border-white/10 w-full max-w-sm text-center">
             <h3 class="text-xl font-bold mb-8">Únete a Xentury</h3>
-            <div id="g_id_onload" data-client_id="TU_CLIENT_ID" data-callback="handleLogin"></div>
+            <div id="g_id_onload" data-client_id="27632986944-j21kbqombnci4apr4fshvi09dhqgv3hm.apps.googleusercontent.com" data-callback="handleLogin"></div>
             <div class="g_id_signin" data-type="standard" data-theme="filled_black" data-shape="pill"></div>
             <button onclick="openAuth()" class="mt-8 text-[10px] text-gray-500 uppercase font-bold">Cerrar</button>
         </div>
@@ -146,13 +174,11 @@
             openAuth();
         }
 
-        // NUEVO: Función Micrófono (Simulada para UI)
         function toggleMic() {
             isRecording = !isRecording;
             const micBtn = document.getElementById('micBtn');
             micBtn.classList.toggle('text-red-500', isRecording);
             micBtn.classList.toggle('animate-pulse', isRecording);
-            if(isRecording) console.log("Grabando audio...");
         }
 
         function renderHistory() {
@@ -188,7 +214,6 @@
 
         function clearFile() { currentFile = null; document.getElementById('previewArea').classList.add('hidden'); }
 
-        // NUEVO: Efecto Maquina de Escribir
         function typeWriter(text, element) {
             let i = 0;
             element.innerHTML = '';
@@ -197,7 +222,7 @@
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
-                    setTimeout(type, 15); // Velocidad de escritura
+                    setTimeout(type, 15);
                     const scrollContainer = document.getElementById('chatDisplay');
                     scrollContainer.scrollTop = scrollContainer.scrollHeight;
                 } else {
@@ -232,13 +257,11 @@
                     })
                 });
                 const data = await res.json();
-                
                 const botMsgId = 'bot-' + Date.now();
                 container.innerHTML += `<div class="msg-bot flex gap-4">
                     <div class="w-6 h-6 rounded bg-white text-black flex items-center justify-center text-[10px] font-bold flex-shrink-0">X</div>
                     <div id="${botMsgId}" class="text-sm leading-relaxed"></div>
                 </div>`;
-                
                 typeWriter(data.response, document.getElementById(botMsgId));
 
                 if(container.children.length <= 2) {
