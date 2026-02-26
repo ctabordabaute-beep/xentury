@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <title>Xentury IA</title>
+    <title>Xentury AI </title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
 
@@ -16,22 +16,21 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         :root { --bg-dark: #09090b; --sidebar: #000000; --accent: #3b82f6; }
         
-        /* 2. FIX PARA MÓVIL: Evita que el teclado empuje todo hacia afuera */
-        html, body { 
-            background-color: var(--bg-dark); 
-            color: #ececec; 
-            font-family: 'Inter', sans-serif; 
-            height: 100%; 
+        html, body {
+            background-color: var(--bg-dark);
+            color: #ececec;
+            font-family: 'Inter', sans-serif;
+            height: 100%;
             width: 100%;
-            overflow: hidden; 
-            position: fixed; 
+            overflow: hidden;
+            position: fixed;
         }
 
         .sidebar { width: 0; background-color: var(--sidebar); border-right: 1px solid rgba(255,255,255,0.1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; opacity: 0; }
         .sidebar.active { width: 260px; opacity: 1; }
         
-        @media (max-width: 768px) { 
-            .sidebar { position: absolute; z-index: 100; height: 100%; background-color: #000; } 
+        @media (max-width: 768px) {
+            .sidebar { position: absolute; z-index: 100; height: 100%; background-color: #000; }
             .msg-user { max-width: 85%; }
         }
 
@@ -118,9 +117,16 @@
                     </div>
                     <div class="flex items-end p-2 gap-1">
                         <button onclick="toggleAttach()" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white"><i class="fas fa-plus-circle text-xl"></i></button>
+                        
+                        <select id="modelSelect" class="bg-transparent text-[10px] text-gray-400 border border-white/10 rounded-lg px-1 h-8 focus:ring-0 cursor-pointer hover:text-white transition self-center mb-1">
+                            <option value="qwen2.5:0.5b">⚡ Qwen (Rápido)</option>
+                            <option value="llama3.2:1b" selected>⚖️ Llama (Smart)</option>
+                            <option value="deepseek-coder:1.3b">💻 DeepSeek (Coder)</option>
+                        </select>
+
                         <button id="micBtn" onclick="toggleMic()" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition"><i class="fas fa-microphone text-lg"></i></button>
                         
-                        <textarea id="userInput" rows="1" placeholder="Mensaje a Xentury..." 
+                        <textarea id="userInput" rows="1" placeholder="Mensaje a Xentury..."
                             class="flex-1 bg-transparent border-none focus:ring-0 py-3 text-[16px] md:text-sm resize-none max-h-32"></textarea>
                         
                         <button onclick="sendMsg()" id="sendBtn" class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition flex-shrink-0"><i class="fas fa-arrow-up"></i></button>
@@ -146,7 +152,7 @@
     </div>
 
     <div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
-        <div class="bg-[#171717] p-8 rounded-[32px] border border-white/10 w-full max-w-sm text-center">
+        <div class="bg-[#171717] p-8 rounded-[32px] border border-white/10 w-full max-sm text-center">
             <h3 class="text-xl font-bold mb-8">Únete a Xentury</h3>
             <div id="g_id_onload" data-client_id="27632986944-j21kbqombnci4apr4fshvi09dhqgv3hm.apps.googleusercontent.com" data-callback="handleLogin"></div>
             <div class="g_id_signin" data-type="standard" data-theme="filled_black" data-shape="pill"></div>
@@ -234,6 +240,7 @@
 
         async function sendMsg() {
             const input = document.getElementById('userInput');
+            const model = document.getElementById('modelSelect').value; // Capta el modelo elegido
             const container = document.getElementById('messagesContainer');
             const text = input.value.trim();
             if (!text && !currentFile) return;
@@ -250,8 +257,9 @@
                 const res = await fetch(`${TUNNEL}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        prompt: currentPrompt, 
+                    body: JSON.stringify({
+                        prompt: currentPrompt,
+                        model: model, // Envía el modelo al Python
                         attachment: currentFile,
                         system: localStorage.getItem('x_system') || ''
                     })
@@ -288,5 +296,3 @@
     </script>
 </body>
 </html>
-
-
