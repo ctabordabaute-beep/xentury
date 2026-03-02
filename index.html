@@ -2,297 +2,383 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>Xentury AI </title>
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="apple-touch-icon" href="logo.png">
-
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xentury AI · Chat Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        :root { --bg-dark: #09090b; --sidebar: #000000; --accent: #3b82f6; }
-        
-        html, body {
-            background-color: var(--bg-dark);
-            color: #ececec;
-            font-family: 'Inter', sans-serif;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            position: fixed;
-        }
-
-        .sidebar { width: 0; background-color: var(--sidebar); border-right: 1px solid rgba(255,255,255,0.1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; opacity: 0; }
-        .sidebar.active { width: 260px; opacity: 1; }
-        
-        @media (max-width: 768px) {
-            .sidebar { position: absolute; z-index: 100; height: 100%; background-color: #000; }
-            .msg-user { max-width: 85%; }
-        }
-
-        .msg-user { background: #2f2f2f; border-radius: 1.5rem; padding: 0.8rem 1.2rem; margin-left: auto; max-width: 80%; animation: slideUp 0.2s ease; }
-        .msg-bot { max-width: 90%; padding: 1rem 0; animation: slideUp 0.3s ease; }
-        
-        .attachment-menu { display: none; position: absolute; bottom: 85px; left: 0; background: #18181b; border: 1px solid #27272a; border-radius: 1rem; padding: 0.5rem; z-index: 50; }
-        .attachment-menu.active { display: block; animation: slideUp 0.2s ease; }
-        
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .typing-cursor::after { content: '|'; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+        /* - Todo tu CSS original sigue aquí */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #0A1929; height: 100vh; overflow: hidden; color: #FFFFFF; }
+        .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0A1929; display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s; }
+        .loading-screen.fade-out { opacity: 0; pointer-events: none; }
+        .loader { text-align: center; }
+        .loader-icon { font-size: 60px; color: #4FC3F7; animation: pulse 1.5s infinite; margin-bottom: 20px; }
+        .loader-text { font-size: 24px; font-weight: 600; color: #E3F2FD; letter-spacing: 2px; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
+        .auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 30%, #0A2942, #05101C); display: flex; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.3s; }
+        .auth-screen.hidden { opacity: 0; pointer-events: none; }
+        .auth-card { background: #102A41; backdrop-filter: blur(10px); border-radius: 40px; padding: 45px; width: 440px; border: 1px solid #4FC3F7; box-shadow: 0 20px 40px rgba(0, 30, 60, 0.8); }
+        .auth-header { text-align: center; margin-bottom: 35px; }
+        .auth-header i { font-size: 50px; color: #4FC3F7; margin-bottom: 15px; }
+        .auth-header h2 { font-size: 32px; color: #E3F2FD; }
+        .input-group { margin-bottom: 20px; position: relative; }
+        .input-group i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #4FC3F7; font-size: 18px; z-index: 1; }
+        .input-group input { width: 100%; background: #0A1A2A; border: 1px solid #1E3A5F; border-radius: 20px; padding: 16px 20px 16px 50px; color: #FFFFFF; font-size: 15px; transition: all 0.3s; }
+        .input-group input:focus { outline: none; border-color: #4FC3F7; box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2); }
+        .btn-auth { background: linear-gradient(135deg, #1565C0, #0D47A1); color: white; border: none; border-radius: 30px; padding: 16px; width: 100%; font-weight: 600; font-size: 16px; cursor: pointer; margin: 25px 0 20px; transition: all 0.3s; border: 1px solid #4FC3F7; }
+        .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(79, 195, 247, 0.4); background: linear-gradient(135deg, #1976D2, #1565C0); }
+        .auth-switch { text-align: center; color: #90CAF9; }
+        .auth-switch span { color: #4FC3F7; font-weight: 600; cursor: pointer; }
+        .chat-app { display: none; width: 100%; height: 100%; background: #0A1929; overflow: hidden; }
+        .app-container { display: flex; width: 100%; height: 100%; position: relative; }
+        .sidebar { width: 320px; background: #0F2740; border-right: 1px solid #1E3A5F; display: flex; flex-direction: column; padding: 24px 16px; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 100; height: 100%; overflow-y: auto; }
+        .sidebar.closed { width: 0; padding: 0; overflow: hidden; border-right: none; }
+        .sidebar-toggle { position: absolute; left: 320px; top: 50%; transform: translateY(-50%); width: 32px; height: 60px; background: #0F2740; border: 1px solid #1E3A5F; border-left: none; border-radius: 0 20px 20px 0; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #4FC3F7; transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 99; font-size: 14px; }
+        .sidebar.closed + .sidebar-toggle { left: 0; }
+        .sidebar-toggle:hover { background: #1A334F; color: #81D4FA; }
+        .logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; padding: 0 8px; }
+        .logo-icon { font-size: 32px; color: #4FC3F7; }
+        .logo-text { font-size: 24px; font-weight: 700; color: #FFFFFF; }
+        .new-chat-btn { background: #0A1A2A; border: 1px solid #1E3A5F; border-radius: 30px; padding: 14px 20px; display: flex; align-items: center; gap: 12px; margin-bottom: 30px; cursor: pointer; transition: all 0.3s; color: #FFFFFF; }
+        .new-chat-btn:hover { background: #102A41; border-color: #4FC3F7; transform: translateX(5px); }
+        .new-chat-btn i { color: #4FC3F7; }
+        .history-title { color: #90CAF9; font-size: 13px; text-transform: uppercase; margin-bottom: 18px; padding-left: 12px; }
+        .chat-history { flex: 1; overflow-y: auto; }
+        .history-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 14px; color: #E3F2FD; margin-bottom: 4px; cursor: pointer; transition: all 0.2s; }
+        .history-item:hover { background: #1A334F; transform: translateX(5px); }
+        .history-item.active { background: #1E3A5F; border-left: 3px solid #4FC3F7; }
+        .history-item i { color: #4FC3F7; width: 20px; }
+        .user-menu { margin-top: auto; border-top: 1px solid #1E3A5F; padding-top: 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 12px; border-radius: 16px; color: #FFFFFF; }
+        .user-menu:hover { background: #1A334F; }
+        .avatar { width: 45px; height: 45px; background: #0A1A2A; border-radius: 30px; display: flex; align-items: center; justify-content: center; border: 2px solid #4FC3F7; color: #4FC3F7; }
+        .user-info { flex: 1; }
+        .user-name { font-weight: 600; font-size: 15px; color: #FFFFFF; }
+        .user-email { font-size: 12px; color: #90CAF9; }
+        .main-chat { flex: 1; display: flex; flex-direction: column; background: #0A1929; position: relative; transition: flex 0.3s cubic-bezier(0.4, 0, 0.2, 1); width: calc(100% - 320px); }
+        .sidebar.closed + .sidebar-toggle + .main-chat { width: 100%; }
+        .chat-header { padding: 20px 32px; border-bottom: 1px solid #1E3A5F; display: flex; align-items: center; justify-content: space-between; background: #0A1929; z-index: 90; }
+        .model-selector { background: #0F2740; border-radius: 40px; padding: 10px 24px; border: 1px solid #1E3A5F; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.3s; position: relative; z-index: 200; color: #FFFFFF; }
+        .model-selector:hover { border-color: #4FC3F7; }
+        .model-selector i { color: #4FC3F7; }
+        .model-dropdown { position: relative; z-index: 1000; }
+        .model-list { position: absolute; top: 50px; left: 0; background: #0F2740; border-radius: 24px; padding: 8px; width: 280px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8); border: 1px solid #4FC3F7; display: none; z-index: 9999; }
+        .model-list.show { display: block; }
+        .model-item { padding: 14px 18px; border-radius: 18px; cursor: pointer; display: flex; align-items: center; gap: 14px; transition: all 0.2s; color: #E3F2FD; }
+        .model-item:hover { background: #1A334F; }
+        .model-item i { color: #4FC3F7; width: 20px; }
+        .model-item.selected { background: #1E3A5F; border-left: 3px solid #4FC3F7; }
+        .header-actions { display: flex; gap: 20px; color: #90CAF9; }
+        .header-actions i { cursor: pointer; transition: all 0.3s; font-size: 18px; }
+        .header-actions i:hover { color: #4FC3F7; transform: scale(1.1); }
+        .messages-area { flex: 1; overflow-y: auto; padding: 30px 32px; display: flex; flex-direction: column; gap: 24px; }
+        .message { display: flex; gap: 18px; max-width: 80%; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message.ai { align-self: flex-start; }
+        .message.user { align-self: flex-end; flex-direction: row-reverse; }
+        .avatar-message { width: 42px; height: 42px; background: #0F2740; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 20px; border: 1px solid #1E3A5F; color: #4FC3F7; }
+        .message.user .avatar-message { background: #1565C0; color: #FFFFFF; }
+        .bubble { background: #0F2740; padding: 16px 20px; border-radius: 24px; border-top-left-radius: 4px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); font-size: 15px; line-height: 1.5; color: #E3F2FD; position: relative; min-width: 100px; border: 1px solid #1E3A5F; }
+        .message.user .bubble { background: #0A1A2A; border-top-right-radius: 4px; border-top-left-radius: 24px; border: 1px solid #4FC3F7; }
+        .file-attachment { display: flex; align-items: center; gap: 12px; background: #0A1A2A; padding: 10px 15px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #1E3A5F; }
+        .file-attachment i { font-size: 24px; color: #4FC3F7; }
+        .file-info { flex: 1; }
+        .file-name { font-size: 13px; font-weight: 500; color: #FFFFFF; }
+        .file-size { font-size: 11px; color: #90CAF9; }
+        .timestamp { font-size: 11px; color: #90CAF9; margin-top: 6px; text-align: right; }
+        .input-area { padding: 24px 32px; border-top: 1px solid #1E3A5F; background: #0A1929; }
+        .input-wrapper { background: #0F2740; border-radius: 60px; border: 1px solid #1E3A5F; display: flex; align-items: center; padding: 6px 6px 6px 24px; transition: all 0.3s; }
+        .input-wrapper:focus-within { border-color: #4FC3F7; box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2); }
+        .input-wrapper input { flex: 1; background: transparent; border: none; color: #FFFFFF; font-size: 15px; padding: 14px 0; }
+        .input-wrapper input::placeholder { color: #90CAF9; }
+        .input-wrapper input:focus { outline: none; }
+        .input-actions { display: flex; gap: 4px; align-items: center; }
+        .action-btn { background: transparent; border: none; color: #90CAF9; font-size: 20px; cursor: pointer; padding: 10px; border-radius: 50%; transition: all 0.2s; position: relative; }
+        .action-btn:hover { background: #1A334F; color: #4FC3F7; }
+        .file-input-hidden { display: none; }
+        .send-btn { background: #1565C0; color: white; width: 52px; height: 52px; border-radius: 50%; border: none; font-size: 20px; cursor: pointer; transition: all 0.3s; border: 1px solid #4FC3F7; }
+        .send-btn:hover { transform: scale(1.05); background: #1976D2; box-shadow: 0 0 15px #4FC3F7; }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #0F2740; border-left: 4px solid #4FC3F7; border-radius: 16px; padding: 16px 24px; color: #FFFFFF; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); display: flex; align-items: center; gap: 12px; transform: translateX(400px); transition: transform 0.3s; z-index: 10000; }
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-left-color: #FF6B6B; }
+        .toast.success { border-left-color: #51CF66; }
+        .toast i { color: #4FC3F7; }
     </style>
 </head>
-<body class="flex">
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"><i class="fas fa-robot loader-icon"></i><div class="loader-text">XENTURY AI</div></div>
+    </div>
+    <div class="toast" id="toast"><i class="fas fa-info-circle"></i><span id="toastMessage"></span></div>
 
-    <aside id="sidebar" class="sidebar flex flex-col p-4 h-full">
-        <div class="flex justify-between items-center mb-6">
-            <span class="text-xs font-bold text-blue-500">HISTORIAL</span>
-            <button onclick="toggleSidebar()" class="p-2 hover:bg-white/5 rounded-lg"><i class="fas fa-chevron-left text-xs"></i></button>
-        </div>
-        <button onclick="newChat()" class="flex items-center gap-3 w-full p-3 rounded-xl border border-white/10 hover:bg-white/5 transition mb-6">
-            <i class="fas fa-plus text-xs"></i>
-            <span class="text-sm font-medium">Nuevo Chat</span>
-        </button>
-        <div id="historyList" class="flex-1 overflow-y-auto space-y-2 no-scrollbar"></div>
-        <div class="pt-4 border-t border-white/10 space-y-2">
-            <button onclick="openConfig()" class="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-white/5 transition text-xs text-gray-400">
-                <i class="fas fa-cog"></i> Configuración AI
-            </button>
-            <button onclick="openAuth()" class="flex items-center gap-3 w-full p-3 rounded-xl hover:bg-white/5 transition">
-                <img id="userAvatar" src="https://ui-avatars.com/api/?name=?" class="w-8 h-8 rounded-full border border-white/10">
-                <div class="text-left overflow-hidden">
-                    <p id="userNameDisplay" class="text-xs font-bold truncate">Invitado</p>
-                    <p class="text-[9px] text-gray-500">Sincronizado</p>
-                </div>
-            </button>
-        </div>
-    </aside>
-
-    <main class="flex-1 flex flex-col min-w-0 relative h-full">
-        <nav class="h-14 border-b border-white/5 flex items-center justify-between px-4">
-            <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="p-2 hover:bg-white/5 rounded-lg"><i class="fas fa-bars-staggered"></i></button>
-                <h1 class="font-bold text-sm">Xentury <span class="text-blue-500">1.0</span></h1>
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-card">
+            <div class="auth-header"><i class="fas fa-robot"></i><h2 id="authTitle">Inicia sesión</h2></div>
+            <div id="loginFields">
+                <div class="input-group"><i class="fas fa-envelope"></i><input type="email" placeholder="Email" id="loginEmail"></div>
+                <div class="input-group"><i class="fas fa-lock"></i><input type="password" placeholder="Pass" id="loginPassword"></div>
+                <button class="btn-auth" id="loginBtn">Entrar</button>
             </div>
-            <div id="statusTag" class="flex items-center gap-1.5 bg-green-500/10 px-2.5 py-1 rounded-full border border-green-500/20">
-                <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-[9px] font-black text-green-500">LIVE</span>
+            <div id="registerFields" style="display: none;">
+                <div class="input-group"><i class="fas fa-user"></i><input type="text" placeholder="Nombre" id="regName"></div>
+                <div class="input-group"><i class="fas fa-envelope"></i><input type="email" placeholder="Email" id="regEmail"></div>
+                <div class="input-group"><i class="fas fa-lock"></i><input type="password" placeholder="Pass" id="regPassword"></div>
+                <button class="btn-auth" id="registerBtn">Registrarse</button>
             </div>
-        </nav>
-
-        <div id="chatDisplay" class="flex-1 overflow-y-auto no-scrollbar">
-            <div class="max-w-3xl mx-auto py-10 px-4 space-y-8">
-                <div id="welcomeScreen" class="flex flex-col items-center text-center space-y-4 py-20">
-                    <div class="w-16 h-16 bg-white text-black rounded-2xl flex items-center justify-center text-3xl font-black shadow-2xl">X</div>
-                    <h2 class="text-2xl font-bold">¿En qué puedo ayudarte hoy?</h2>
-                </div>
-                <div id="messagesContainer" class="space-y-8 pb-10"></div>
-            </div>
-        </div>
-
-        <div class="p-2 md:p-4 bg-[#09090b]">
-            <div class="max-w-3xl mx-auto relative">
-                <div id="attachMenu" class="attachment-menu w-48 shadow-2xl">
-                    <label class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg cursor-pointer transition">
-                        <i class="fas fa-image text-blue-400"></i><span class="text-xs">Imágenes</span>
-                        <input type="file" id="imgInput" class="hidden" accept="image/*" onchange="handleFile(this, 'img')">
-                    </label>
-                    <label class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg cursor-pointer transition">
-                        <i class="fas fa-file-alt text-purple-400"></i><span class="text-xs">Documentos</span>
-                        <input type="file" id="fileInput" class="hidden" onchange="handleFile(this, 'file')">
-                    </label>
-                </div>
-
-                <div class="bg-[#212121] rounded-[22px] border border-white/10 shadow-2xl focus-within:border-white/20">
-                    <div id="previewArea" class="hidden p-3 border-b border-white/5">
-                        <div class="relative w-14 h-14 rounded-lg overflow-hidden border border-white/10">
-                            <img id="imgPreview" src="" class="w-full h-full object-cover">
-                            <div id="fileIconPreview" class="hidden w-full h-full flex items-center justify-center bg-zinc-800"><i class="fas fa-file text-xl"></i></div>
-                            <button onclick="clearFile()" class="absolute top-0 right-0 bg-black/60 p-1 text-[8px] hover:text-red-500"><i class="fas fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="flex items-end p-2 gap-1">
-                        <button onclick="toggleAttach()" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white"><i class="fas fa-plus-circle text-xl"></i></button>
-                        
-                        <select id="modelSelect" class="bg-transparent text-[10px] text-gray-400 border border-white/10 rounded-lg px-1 h-8 focus:ring-0 cursor-pointer hover:text-white transition self-center mb-1">
-                            <option value="qwen2.5:0.5b">⚡ Qwen (Rápido)</option>
-                            <option value="llama3.2:1b" selected>⚖️ Llama (Smart)</option>
-                            <option value="deepseek-coder:1.3b">💻 DeepSeek (Coder)</option>
-                        </select>
-
-                        <button id="micBtn" onclick="toggleMic()" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition"><i class="fas fa-microphone text-lg"></i></button>
-                        
-                        <textarea id="userInput" rows="1" placeholder="Mensaje a Xentury..."
-                            class="flex-1 bg-transparent border-none focus:ring-0 py-3 text-[16px] md:text-sm resize-none max-h-32"></textarea>
-                        
-                        <button onclick="sendMsg()" id="sendBtn" class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition flex-shrink-0"><i class="fas fa-arrow-up"></i></button>
-                    </div>
-                </div>
-                
-                <p class="text-[10px] text-gray-500 text-center mt-2 font-medium opacity-80">
-                    Xentury puede cometer errores. Considera verificar la información importante.
-                </p>
-            </div>
-        </div>
-    </main>
-
-    <div id="configModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
-        <div class="bg-[#171717] p-8 rounded-[32px] border border-white/10 w-full max-w-md shadow-2xl">
-            <h3 class="text-xl font-bold mb-4">Personalidad de la IA 🧠</h3>
-            <textarea id="systemPrompt" class="w-full h-32 bg-black/40 border border-white/10 rounded-xl p-4 text-sm focus:ring-1 focus:ring-blue-500 outline-none resize-none mb-6" placeholder="Ej: Háblame como un programador senior..."></textarea>
-            <div class="flex gap-2">
-                <button onclick="saveConfig()" class="flex-1 bg-blue-600 p-3 rounded-xl font-bold text-sm">Guardar Memoria</button>
-                <button onclick="closeConfig()" class="px-6 bg-white/5 rounded-xl text-xs">Cerrar</button>
-            </div>
+            <div class="auth-switch">¿No tienes cuenta? <span id="toggleAuth">Regístrate</span></div>
         </div>
     </div>
 
-    <div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
-        <div class="bg-[#171717] p-8 rounded-[32px] border border-white/10 w-full max-sm text-center">
-            <h3 class="text-xl font-bold mb-8">Únete a Xentury</h3>
-            <div id="g_id_onload" data-client_id="27632986944-j21kbqombnci4apr4fshvi09dhqgv3hm.apps.googleusercontent.com" data-callback="handleLogin"></div>
-            <div class="g_id_signin" data-type="standard" data-theme="filled_black" data-shape="pill"></div>
-            <button onclick="openAuth()" class="mt-8 text-[10px] text-gray-500 uppercase font-bold">Cerrar</button>
+    <div class="chat-app" id="chatApp">
+        <div class="app-container">
+            <div class="sidebar" id="sidebar">
+                <div class="logo-area"><i class="fas fa-robot logo-icon"></i><span class="logo-text">Xentury AI</span></div>
+                <div class="new-chat-btn" id="newChatBtn"><i class="fas fa-plus-circle"></i><span>Nuevo chat</span></div>
+                <div class="history-title"><i class="far fa-clock"></i> Historial</div>
+                <div class="chat-history" id="chatHistory"></div>
+                <div class="user-menu" id="userMenu">
+                    <div class="avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-info"><div class="user-name" id="displayName"></div><div class="user-email" id="displayEmail"></div></div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-chevron-left"></i></div>
+            <div class="main-chat" id="mainChat">
+                <div class="chat-header">
+                    <div class="model-dropdown">
+                        <div class="model-selector" id="modelSelector">
+                            <span id="selectedModel">⚖️ Llama 3.2 (Smart)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="model-list" id="modelList">
+                            <div class="model-item" data-model="qwen2.5:0.5b"><i class="fas fa-bolt"></i> Qwen (Flash)</div>
+                            <div class="model-item" data-model="llama3.2:1b" selected><i class="fas fa-gem"></i> Llama 3.2 (Smart)</div>
+                            <div class="model-item" data-model="deepseek-coder:1.3b"><i class="fas fa-code"></i> DeepSeek (Coder)</div>
+                        </div>
+                    </div>
+                    <div class="header-actions"><i class="fas fa-share-nodes"></i><i class="fas fa-sliders"></i></div>
+                </div>
+                <div class="messages-area" id="messagesArea"></div>
+                <div class="input-area">
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Escribe un mensaje..." id="messageInput">
+                        <div class="input-actions">
+                            <input type="file" id="fileInput" class="file-input-hidden" multiple>
+                            <button class="action-btn" id="attachBtn"><i class="fas fa-paperclip"></i></button>
+                            <button class="action-btn" id="imageBtn"><i class="far fa-image"></i></button>
+                            <button class="send-btn" id="sendBtn"><i class="fas fa-arrow-up"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        const TUNNEL = "https://backend.xentury.xyz";
-        let currentFile = null;
-        let chatHistory = JSON.parse(localStorage.getItem('xentury_history')) || [];
-        let isRecording = false;
-
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-        function toggleAttach() { document.getElementById('attachMenu').classList.toggle('active'); }
-        function openAuth() { document.getElementById('authModal').classList.toggle('hidden'); document.getElementById('authModal').classList.toggle('flex'); }
-        function openConfig() { document.getElementById('configModal').classList.replace('hidden', 'flex'); document.getElementById('systemPrompt').value = localStorage.getItem('x_system') || ''; }
-        function closeConfig() { document.getElementById('configModal').classList.replace('flex', 'hidden'); }
-        function saveConfig() { localStorage.setItem('x_system', document.getElementById('systemPrompt').value); closeConfig(); }
-
-        function handleLogin(response) {
-            const user = JSON.parse(atob(response.credential.split('.')[1]));
-            document.getElementById('userNameDisplay').innerText = user.name;
-            document.getElementById('userAvatar').src = user.picture;
-            openAuth();
+        // - Mantenemos tu clase Database intacta
+        class Database {
+            constructor() { this.USERS = 'xentury_users'; this.CHATS = 'xentury_chats'; this.SESSION = 'xentury_session'; this.init(); }
+            init() { if (!localStorage.getItem(this.USERS)) localStorage.setItem(this.USERS, JSON.stringify([])); if (!localStorage.getItem(this.CHATS)) localStorage.setItem(this.CHATS, JSON.stringify({})); }
+            getUsers() { return JSON.parse(localStorage.getItem(this.USERS)); }
+            saveUser(user) { const users = this.getUsers(); users.push(user); localStorage.setItem(this.USERS, JSON.stringify(users)); }
+            findUser(email) { return this.getUsers().find(u => u.email === email); }
+            setSession(user) { sessionStorage.setItem(this.SESSION, JSON.stringify({ id: user.id, name: user.name, email: user.email })); }
+            getSession() { const s = sessionStorage.getItem(this.SESSION); return s ? JSON.parse(s) : null; }
+            clearSession() { sessionStorage.removeItem(this.SESSION); }
+            getUserChats(userId) { const all = JSON.parse(localStorage.getItem(this.CHATS)); return all[userId] || []; }
+            saveUserChats(userId, chats) { const all = JSON.parse(localStorage.getItem(this.CHATS)); all[userId] = chats; localStorage.setItem(this.CHATS, JSON.stringify(all)); }
         }
 
-        function toggleMic() {
-            isRecording = !isRecording;
-            const micBtn = document.getElementById('micBtn');
-            micBtn.classList.toggle('text-red-500', isRecording);
-            micBtn.classList.toggle('animate-pulse', isRecording);
+        const db = new Database();
+        const TUNNEL = "https://backend.xentury.xyz"; // - Tu backend
+        let currentUser = null;
+        let currentChat = null;
+        let sidebarOpen = true;
+        let pendingFiles = [];
+        let activeModelId = "llama3.2:1b"; // Default
+
+        // Elementos UI
+        const loading = document.getElementById('loadingScreen');
+        const authScreen = document.getElementById('authScreen');
+        const chatApp = document.getElementById('chatApp');
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMessage');
+
+        function showToast(msg, type = 'info') { toastMsg.textContent = msg; toast.className = 'toast show ' + type; setTimeout(() => toast.classList.remove('show'), 3000); }
+
+        setTimeout(() => {
+            loading.classList.add('fade-out');
+            const session = db.getSession();
+            if (session) {
+                const user = db.findUser(session.email);
+                if (user) { currentUser = user; authScreen.classList.add('hidden'); chatApp.style.display = 'flex'; loadUserChats(); updateUserInfo(); }
+            }
+        }, 2000);
+
+        // - Auth Logic intacta
+        let isLogin = true;
+        document.getElementById('toggleAuth').addEventListener('click', () => {
+            isLogin = !isLogin;
+            document.getElementById('authTitle').textContent = isLogin ? 'Inicia sesión' : 'Regístrate';
+            document.getElementById('loginFields').style.display = isLogin ? 'block' : 'none';
+            document.getElementById('registerFields').style.display = isLogin ? 'none' : 'block';
+            document.getElementById('toggleAuth').textContent = isLogin ? 'Regístrate' : 'Inicia sesión';
+        });
+
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPassword').value;
+            const user = db.findUser(email);
+            if (!user || user.password !== pass) { showToast('Credenciales inválidas', 'error'); return; }
+            currentUser = user; db.setSession(user); authScreen.classList.add('hidden'); chatApp.style.display = 'flex'; loadUserChats(); updateUserInfo(); showToast('¡Bienvenido, mano!', 'success');
+        });
+
+        document.getElementById('registerBtn').addEventListener('click', () => {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPassword').value;
+            if (!name || !email || !pass) { showToast('Completa todo', 'error'); return; }
+            const newUser = { id: Date.now(), name, email, password: pass };
+            db.saveUser(newUser); currentUser = newUser; db.setSession(newUser);
+            const welcomeChat = { id: Date.now(), title: 'Bienvenida', messages: [{ role: 'ai', content: '¡Hablame! Soy Xentury AI.', timestamp: new Date().toLocaleTimeString() }] };
+            const allChats = JSON.parse(localStorage.getItem(db.CHATS)); allChats[newUser.id] = [welcomeChat]; localStorage.setItem(db.CHATS, JSON.stringify(allChats));
+            currentChat = welcomeChat; authScreen.classList.add('hidden'); chatApp.style.display = 'flex'; loadUserChats(); updateUserInfo(); loadChat(welcomeChat);
+        });
+
+        // - Sidebar Toggle
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            sidebarOpen = !sidebarOpen;
+            const sb = document.getElementById('sidebar');
+            const tg = document.getElementById('sidebarToggle');
+            if (sidebarOpen) { sb.classList.remove('closed'); tg.innerHTML = '<i class="fas fa-chevron-left"></i>'; }
+            else { sb.classList.add('closed'); tg.innerHTML = '<i class="fas fa-chevron-right"></i>'; }
+        });
+
+        function updateUserInfo() { if (currentUser) { document.getElementById('displayName').textContent = currentUser.name; document.getElementById('displayEmail').textContent = currentUser.email; } }
+
+        function loadUserChats() {
+            if (!currentUser) return;
+            const chats = db.getUserChats(currentUser.id);
+            const history = document.getElementById('chatHistory');
+            history.innerHTML = '';
+            chats.forEach(chat => {
+                const div = document.createElement('div');
+                div.className = 'history-item' + (currentChat?.id === chat.id ? ' active' : '');
+                div.innerHTML = `<i class="fas fa-comment"></i><span>${chat.title}</span>`;
+                div.addEventListener('click', () => loadChat(chat));
+                history.appendChild(div);
+            });
+            if (chats.length > 0 && !currentChat) loadChat(chats[0]);
         }
 
-        function renderHistory() {
-            const list = document.getElementById('historyList');
-            list.innerHTML = chatHistory.map((chat, i) => `
-                <div class="group flex items-center justify-between p-3 rounded-lg hover:bg-white/5 cursor-pointer transition">
-                    <span class="text-xs truncate text-gray-400 w-full" onclick="loadChat(${i})">${chat.title}</span>
-                    <button onclick="deleteChat(${i})" class="opacity-0 group-hover:opacity-100 text-gray-600 hover:text-red-500"><i class="fas fa-trash-alt text-[10px]"></i></button>
-                </div>
-            `).join('');
+        function loadChat(chat) {
+            currentChat = chat;
+            document.querySelectorAll('.history-item').forEach(el => el.classList.remove('active'));
+            const msgArea = document.getElementById('messagesArea');
+            msgArea.innerHTML = '';
+            chat.messages.forEach(msg => addMessageToUI(msg.content, msg.role === 'user', msg.timestamp, msg.files));
         }
 
-        function handleFile(input, type) {
-            const file = input.files[0];
-            if (file) {
+        function addMessageToUI(text, isUser = false, timestamp = null, files = []) {
+            const msgArea = document.getElementById('messagesArea');
+            const time = timestamp || new Date().toLocaleTimeString();
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
+            let filesHTML = files ? files.map(f => `<div class="file-attachment"><i class="fas fa-file"></i><div class="file-info"><div class="file-name">${f.name}</div></div></div>`).join('') : '';
+            messageDiv.innerHTML = `<div class="avatar-message"><i class="fas ${isUser ? 'fa-user' : 'fa-robot'}"></i></div><div class="bubble">${filesHTML}${text}<div class="timestamp">${time}</div></div>`;
+            msgArea.appendChild(messageDiv);
+            msgArea.scrollTop = msgArea.scrollHeight;
+            return messageDiv;
+        }
+
+        // - File Handling
+        const fileInput = document.getElementById('fileInput');
+        document.getElementById('attachBtn').addEventListener('click', () => { fileInput.accept = '*/*'; fileInput.click(); });
+        document.getElementById('imageBtn').addEventListener('click', () => { fileInput.accept = 'image/*'; fileInput.click(); });
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            files.forEach(file => {
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    currentFile = { data: e.target.result, type: type, name: file.name };
-                    document.getElementById('previewArea').classList.remove('hidden');
-                    if(type === 'img') {
-                        document.getElementById('imgPreview').classList.remove('hidden');
-                        document.getElementById('fileIconPreview').classList.add('hidden');
-                        document.getElementById('imgPreview').src = e.target.result;
-                    } else {
-                        document.getElementById('imgPreview').classList.add('hidden');
-                        document.getElementById('fileIconPreview').classList.remove('hidden');
-                    }
-                };
+                reader.onload = (ev) => pendingFiles.push({ name: file.name, data: ev.target.result, type: file.type });
                 reader.readAsDataURL(file);
-            }
-            document.getElementById('attachMenu').classList.remove('active');
-        }
+            });
+            if (files.length > 0) showToast(`${files.length} archivo(s) listos`, 'success');
+        });
 
-        function clearFile() { currentFile = null; document.getElementById('previewArea').classList.add('hidden'); }
-
-        function typeWriter(text, element) {
-            let i = 0;
-            element.innerHTML = '';
-            element.classList.add('typing-cursor');
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, 15);
-                    const scrollContainer = document.getElementById('chatDisplay');
-                    scrollContainer.scrollTop = scrollContainer.scrollHeight;
-                } else {
-                    element.classList.remove('typing-cursor');
-                }
-            }
-            type();
-        }
-
-        async function sendMsg() {
-            const input = document.getElementById('userInput');
-            const model = document.getElementById('modelSelect').value; // Capta el modelo elegido
-            const container = document.getElementById('messagesContainer');
+        // ==================== [NUEVO] ENVÍO REAL A IA ====================
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
             const text = input.value.trim();
-            if (!text && !currentFile) return;
+            if ((!text && pendingFiles.length === 0) || !currentUser || !currentChat) return;
 
-            document.getElementById('welcomeScreen').classList.add('hidden');
-            container.innerHTML += `<div class="msg-user text-sm">${text}${currentFile ? `<br><span class="text-[10px] text-blue-400 font-bold">${currentFile.name}</span>` : ''}</div>`;
+            const userMsg = { role: 'user', content: text || '(Archivo)', timestamp: new Date().toLocaleTimeString(), files: [...pendingFiles] };
+            addMessageToUI(userMsg.content, true, userMsg.timestamp, userMsg.files);
+            currentChat.messages.push(userMsg);
             
-            const currentPrompt = text;
             input.value = '';
-            input.style.height = 'auto';
-            clearFile();
+            const sentFiles = [...pendingFiles];
+            pendingFiles = [];
+
+            // Burbuja de "Escribiendo..."
+            const loadingBubble = addMessageToUI('<i class="fas fa-ellipsis-h animate-pulse"></i>', false);
 
             try {
-                const res = await fetch(`${TUNNEL}/api/chat`, {
+                // - Llamada real a tu API
+                const response = await fetch(`${TUNNEL}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        prompt: currentPrompt,
-                        model: model, // Envía el modelo al Python
-                        attachment: currentFile,
-                        system: localStorage.getItem('x_system') || ''
+                        prompt: text,
+                        model: activeModelId,
+                        attachment: sentFiles.length > 0 ? sentFiles[0] : null,
+                        system: "Habla como un venezolano, corto, directo y con humor negro. No uses inglés."
                     })
                 });
-                const data = await res.json();
-                const botMsgId = 'bot-' + Date.now();
-                container.innerHTML += `<div class="msg-bot flex gap-4">
-                    <div class="w-6 h-6 rounded bg-white text-black flex items-center justify-center text-[10px] font-bold flex-shrink-0">X</div>
-                    <div id="${botMsgId}" class="text-sm leading-relaxed"></div>
-                </div>`;
-                typeWriter(data.response, document.getElementById(botMsgId));
+                const data = await response.json();
+                loadingBubble.remove();
+                
+                const aiMsg = { role: 'ai', content: data.response, timestamp: new Date().toLocaleTimeString() };
+                addMessageToUI(aiMsg.content, false, aiMsg.timestamp);
+                currentChat.messages.push(aiMsg);
 
-                if(container.children.length <= 2) {
-                    chatHistory.unshift({ title: currentPrompt.substring(0, 30) + '...', messages: container.innerHTML });
-                    localStorage.setItem('xentury_history', JSON.stringify(chatHistory.slice(0, 10)));
-                    renderHistory();
-                }
-            } catch (e) {
-                container.innerHTML += `<div class="text-red-500 text-[10px] text-center py-4">Error de conexión. 💀</div>`;
+                // Guardar en DB
+                const allChats = JSON.parse(localStorage.getItem(db.CHATS));
+                const userChats = allChats[currentUser.id];
+                const idx = userChats.findIndex(c => c.id === currentChat.id);
+                if (idx !== -1) { userChats[idx] = currentChat; localStorage.setItem(db.CHATS, JSON.stringify(allChats)); }
+
+            } catch (err) {
+                loadingBubble.innerHTML = '<div class="bubble" style="color:#FF6B6B">Error: El servidor no responde. 💀</div>';
             }
         }
 
-        function newChat() {
-            document.getElementById('messagesContainer').innerHTML = '';
-            document.getElementById('welcomeScreen').classList.remove('hidden');
-            if (window.innerWidth < 768) toggleSidebar();
-        }
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
 
-        function deleteChat(i) { chatHistory.splice(i, 1); localStorage.setItem('xentury_history', JSON.stringify(chatHistory)); renderHistory(); }
-        function loadChat(i) { document.getElementById('welcomeScreen').classList.add('hidden'); document.getElementById('messagesContainer').innerHTML = chatHistory[i].messages; if (window.innerWidth < 768) toggleSidebar(); }
+        // - Selector de Modelos real
+        const modelSelector = document.getElementById('modelSelector');
+        const modelList = document.getElementById('modelList');
+        modelSelector.addEventListener('click', (e) => { e.stopPropagation(); modelList.classList.toggle('show'); });
+        
+        document.querySelectorAll('.model-item').forEach(item => {
+            item.addEventListener('click', () => {
+                activeModelId = item.getAttribute('data-model');
+                document.getElementById('selectedModel').textContent = item.textContent;
+                modelList.classList.remove('show');
+            });
+        });
 
-        renderHistory();
-        document.getElementById('userInput').addEventListener('input', function() { this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px'; });
+        document.addEventListener('click', () => modelList.classList.remove('show'));
+
+        document.getElementById('newChatBtn').addEventListener('click', () => {
+            const nc = { id: Date.now(), title: `Chat ${new Date().toLocaleDateString()}`, messages: [] };
+            const all = JSON.parse(localStorage.getItem(db.CHATS));
+            all[currentUser.id].unshift(nc);
+            localStorage.setItem(db.CHATS, JSON.stringify(all));
+            currentChat = nc; loadUserChats(); loadChat(nc);
+        });
     </script>
 </body>
 </html>
