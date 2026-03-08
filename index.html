@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xentury AI - Chat Intelligence</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>XenturyAI</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
@@ -15,181 +12,46 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f2f 100%);
-            height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0a;
+            min-height: 100vh;
             overflow: hidden;
-            color: #fff;
+            color: #e5e5e5;
         }
 
-        /* Login Screen */
-        .login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f2f 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+        /* Scrollbar personalizado - modo oscuro */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
 
-        .login-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
         }
 
-        .login-container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            animation: slideUpFade 0.6s ease;
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
         }
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
-        .login-logo {
-            font-size: 48px;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .login-header h2 {
-            font-size: 2rem;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .login-header p {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            z-index: 1;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 15px 15px 15px 45px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-        }
-
-        .input-group input::placeholder {
-            color: #64748b;
-        }
-
-        .login-btn {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .login-btn i {
-            font-size: 18px;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
-        }
-
-        .login-btn:active {
-            transform: translateY(0);
-        }
-
-        .register-link {
-            text-align: center;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        .register-link a {
-            color: #60a5fa;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-
-        .register-link a:hover {
-            color: #3b82f6;
-        }
-
-        /* Sidebar Styles */
+        /* Sidebar - Estilo ChatGPT Oscuro */
         .sidebar {
             position: fixed;
-            left: -320px;
+            left: -280px;
             top: 0;
-            width: 320px;
+            width: 280px;
             height: 100vh;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            transition: left 0.3s ease;
+            background-color: #0a0a0a;
+            border-right: 1px solid #2a2a2a;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
-            padding: 20px;
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.5);
         }
 
         .sidebar.open {
@@ -197,466 +59,533 @@
         }
 
         .sidebar-header {
+            padding: 16px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 8px;
+            border-bottom: 1px solid #2a2a2a;
         }
 
-        .sidebar-header h3 {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 1.2rem;
-            font-weight: 600;
+        .new-chat-btn {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            color: #e5e5e5;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+        }
+
+        .new-chat-btn:hover {
+            background: #252525;
+            border-color: #3a3a3a;
+            transform: translateY(-1px);
+        }
+
+        .new-chat-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: #e5e5e5;
         }
 
         .close-sidebar {
-            background: none;
-            border: none;
-            font-size: 20px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            width: 42px;
             cursor: pointer;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: transform 0.3s;
+            color: #e5e5e5;
+            font-size: 18px;
+            transition: all 0.2s;
         }
 
         .close-sidebar:hover {
-            transform: scale(1.1);
+            background: #252525;
+            border-color: #3a3a3a;
+        }
+
+        /* Login Section - Oscuro */
+        .login-section {
+            padding: 16px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .login-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #e5e5e5;
+            transition: all 0.2s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #666;
+            background: #202020;
+        }
+
+        .login-input::placeholder {
+            color: #666;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2a2a2a;
+            color: #e5e5e5;
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #333;
+            border-color: #4a4a4a;
+            transform: translateY(-1px);
         }
 
         .user-info {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .user-details {
-            flex: 1;
-        }
-
-        .user-details h4 {
-            color: #fff;
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .user-details p {
-            color: #94a3b8;
-            font-size: 0.8rem;
-        }
-
-        .user-details p i {
-            margin-right: 4px;
-            font-size: 12px;
-        }
-
-        .history-header {
-            display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            padding: 12px 16px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            margin: 16px;
+            border: 1px solid #2a2a2a;
         }
 
-        .history-header h4 {
-            color: #fff;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .clear-all-btn {
-            background: none;
-            border: none;
-            color: #ef4444;
+        .user-email {
             font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 5px 10px;
-            border-radius: 6px;
-            transition: all 0.3s;
+            color: #e5e5e5;
+            font-weight: 500;
         }
 
-        .clear-all-btn:hover {
-            background: rgba(239, 68, 68, 0.1);
+        .logout-btn {
+            padding: 6px 12px;
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            border-radius: 6px;
+            color: #ff6b6b;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #ff4444;
+            color: white;
+            border-color: #ff4444;
+        }
+
+        /* History Section - Oscuro */
+        .history-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .history-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            padding-left: 8px;
         }
 
         .history-item {
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            animation: slideIn 0.3s ease;
-            position: relative;
-            group: true;
+            transition: all 0.2s;
+            gap: 8px;
+            border: 1px solid transparent;
         }
 
         .history-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: #3b82f6;
+            background: #1a1a1a;
+            border-color: #2a2a2a;
+            transform: translateX(4px);
         }
 
-        .history-item-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .history-item.active {
+            background: #1a1a1a;
+            border-color: #3a3a3a;
         }
 
-        .history-item-text {
+        .history-icon {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .history-title-text {
             flex: 1;
-        }
-
-        .history-item-text p {
-            color: #fff;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
+            font-size: 14px;
+            color: #e5e5e5;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .history-item-text small {
-            color: #60a5fa;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .delete-chat-btn {
+        .delete-history {
+            opacity: 0;
             background: none;
             border: none;
-            color: #ef4444;
-            font-size: 14px;
+            color: #666;
             cursor: pointer;
-            padding: 8px;
+            font-size: 16px;
+            padding: 4px 8px;
             border-radius: 6px;
-            opacity: 0;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .history-item:hover .delete-chat-btn {
+        .history-item:hover .delete-history {
             opacity: 1;
         }
 
-        .delete-chat-btn:hover {
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .logout-btn {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #ef4444;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .logout-btn:hover {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: #ef4444;
-        }
-
-        /* Main Container */
-        .chat-container {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: transparent;
-            margin-left: 0;
-            transition: margin-left 0.3s ease;
-        }
-
-        .chat-container.shifted {
-            margin-left: 320px;
-        }
-
-        /* Header */
-        .chat-header {
-            padding: 20px 30px;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .menu-toggle {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: transform 0.3s;
-        }
-
-        .menu-toggle:hover {
+        .delete-history:hover {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
             transform: scale(1.1);
         }
 
-        .logo {
+        /* Main Content */
+        .main-content {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0a0a0a;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 0;
+        }
+
+        .main-content.shifted {
+            margin-left: 280px;
+        }
+
+        /* Header */
+        .header {
+            background-color: #0a0a0a;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .logo-icon {
-            font-size: 32px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: pulse 2s infinite;
-        }
-
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo span {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            font-weight: 400;
-        }
-
-        /* Messages Area */
-        .messages-area {
-            flex: 1;
-            overflow-y: auto;
-            padding: 30px;
-        }
-
-        .message {
-            display: flex;
-            margin-bottom: 25px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .message.user {
-            justify-content: flex-end;
-        }
-
-        .message-content {
-            max-width: 70%;
-            padding: 15px 20px;
-            border-radius: 15px;
-            position: relative;
-            animation: slideUp 0.3s ease;
-        }
-
-        .message-content img, .message-content .file-attachment {
-            max-width: 100%;
+        .menu-toggle {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
             border-radius: 8px;
-            margin-top: 10px;
-        }
-
-        .file-attachment {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .user .message-content {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            border-bottom-right-radius: 5px;
-        }
-
-        .ai .message-content {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border-bottom-left-radius: 5px;
-        }
-
-        .avatar {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            cursor: pointer;
+            color: #e5e5e5;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            color: white;
+            transition: all 0.2s;
+        }
+
+        .menu-toggle:hover {
+            background: #252525;
+            border-color: #3a3a3a;
+            transform: scale(1.05);
+        }
+
+        .menu-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: #e5e5e5;
+        }
+
+        .header-title {
             font-size: 18px;
+            font-weight: 600;
+            color: #e5e5e5;
+            flex: 1;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .user .avatar {
-            margin-left: 15px;
-            margin-right: 0;
-            order: 2;
-            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+        .model-badge {
+            padding: 6px 12px;
+            background: #1a1a1a;
+            border-radius: 100px;
+            font-size: 12px;
+            color: #888;
+            border: 1px solid #2a2a2a;
+            animation: pulse 2s infinite;
         }
 
-        /* Typing animation */
-        .typing {
-            display: inline-block;
-            position: relative;
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
         }
 
-        .typing::after {
-            content: '|';
-            animation: blink 0.7s infinite;
-            margin-left: 2px;
-            color: #60a5fa;
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+            background-color: #0a0a0a;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeOut 0.5s ease 1.5s forwards;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-logo {
+            font-size: 48px;
+            font-weight: 700;
+            color: #e5e5e5;
+            margin-bottom: 20px;
+            animation: glow 1.5s ease-in-out infinite;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #1a1a1a;
+            border-top: 3px solid #666;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            color: #888;
+            font-size: 14px;
+            animation: typing 1s infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px rgba(255,255,255,0.2); }
+            50% { text-shadow: 0 0 20px rgba(255,255,255,0.4); }
+            100% { text-shadow: 0 0 5px rgba(255,255,255,0.2); }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            padding: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #e5e5e5;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .welcome-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 32px;
+            animation: fadeIn 1s ease;
+        }
+
+        .welcome-icons span {
+            animation: bounce 2s ease infinite;
+        }
+
+        .welcome-icons span:nth-child(2) { animation-delay: 0.2s; }
+        .welcome-icons span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Messages */
+        .message {
+            padding: 24px 20px;
+            animation: slideIn 0.3s ease;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message.user {
+            background-color: #0a0a0a;
+        }
+
+        .message.assistant {
+            background-color: #0f0f0f;
+        }
+
+        .message-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .message-avatar.assistant {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            color: #e5e5e5;
+            border: 1px solid #3a3a3a;
+        }
+
+        .message-avatar.user {
+            background: linear-gradient(135deg, #333, #222);
+            color: #e5e5e5;
+            border: 1px solid #444;
+        }
+
+        .message-text {
+            flex: 1;
+            line-height: 1.6;
+            font-size: 15px;
+            color: #e5e5e5;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
 
         /* Input Area */
         .input-area {
-            padding: 20px 30px;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid #2a2a2a;
+            padding: 24px 20px;
+            background-color: #0a0a0a;
         }
 
         .input-container {
-            display: flex;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-        }
-
-        .input-container:focus-within {
-            border-color: #3b82f6;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-        }
-
-        textarea {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 15px 20px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            resize: none;
-            outline: none;
-            color: #fff;
-        }
-
-        textarea::placeholder {
-            color: #64748b;
-        }
-
-        .attach-button {
-            width: 45px;
-            height: 45px;
-            border: none;
-            background: transparent;
-            color: #60a5fa;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.3s;
+            max-width: 800px;
+            margin: 0 auto;
             position: relative;
         }
 
-        .attach-button:hover {
-            background: rgba(96, 165, 250, 0.1);
-        }
-
-        .file-input {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .send-button {
-            width: 45px;
-            height: 45px;
-            border: none;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            color: white;
-            border-radius: 50%;
-            cursor: pointer;
+        .input-wrapper {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
+            align-items: flex-end;
+            gap: 12px;
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 8px 12px;
             transition: all 0.3s;
-        }
-
-        .send-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.5);
-        }
-
-        .send-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Animations */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            animation: slideUp 0.5s ease;
         }
 
         @keyframes slideUp {
@@ -670,103 +599,110 @@
             }
         }
 
-        @keyframes slideUpFade {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
+        .input-wrapper:focus-within {
+            border-color: #666;
+            box-shadow: 0 0 0 2px rgba(102, 102, 102, 0.2);
+            transform: scale(1.01);
+        }
+
+        textarea {
+            flex: 1;
+            border: none;
+            padding: 12px 8px;
+            resize: none;
+            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.5;
+            max-height: 200px;
+            background: transparent;
+            color: #e5e5e5;
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+
+        textarea::placeholder {
+            color: #666;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            color: #e5e5e5;
+            border: 1px solid #3a3a3a;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: fit-content;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            background: #333;
+            border-color: #4a4a4a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .send-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #e5e5e5;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 6px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #666;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Letter animation */
+        .letter {
+            display: inline-block;
+            animation: typeLetter 0.03s ease-out;
+            opacity: 0;
+            transform: translateY(5px);
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes typeLetter {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Loading indicator */
-        .loading {
-            display: flex;
-            gap: 5px;
-            padding: 15px 20px;
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            width: fit-content;
-        }
-
-        .loading span {
-            width: 8px;
-            height: 8px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-
-        .loading span:nth-child(1) { animation-delay: -0.32s; }
-        .loading span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            border-radius: 4px;
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 15px 20px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 3000;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast i {
-            font-size: 20px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* Message hover effect */
+        .message:hover {
+            background-color: #121212;
+            transition: background-color 0.2s;
         }
 
         /* Responsive */
@@ -775,621 +711,544 @@
                 width: 100%;
                 left: -100%;
             }
-            
-            .chat-container.shifted {
+
+            .main-content.shifted {
                 margin-left: 0;
             }
-            
-            .message-content {
-                max-width: 85%;
-            }
 
-            .login-container {
-                margin: 20px;
-                padding: 30px;
+            .welcome-title {
+                font-size: 36px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-container">
-            <div class="login-header">
-                <i class="fas fa-robot login-logo"></i>
-                <h2>Xentury AI</h2>
-                <p><i class="fas fa-shield-alt"></i> Acceso seguro</p>
-            </div>
-            
-            <div class="login-form">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="loginNombre" placeholder="Nombre completo">
-                </div>
-
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="loginEmail" placeholder="Correo electrónico">
-                </div>
-                
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="loginPassword" placeholder="Contraseña">
-                </div>
-                
-                <button class="login-btn" onclick="login()">
-                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                </button>
-                
-                <div class="register-link">
-                    <i class="fas fa-user-plus"></i> ¿No tienes cuenta? <a onclick="showRegister()">Regístrate</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal (hidden by default) -->
-    <div class="login-screen" id="registerScreen" style="display: none;">
-        <div class="login-container">
-            <div class="login-header">
-                <i class="fas fa-robot login-logo"></i>
-                <h2>Crear Cuenta</h2>
-                <p><i class="fas fa-shield-alt"></i> Registro seguro</p>
-            </div>
-            
-            <div class="login-form">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="regNombre" placeholder="Nombre completo">
-                </div>
-
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="regEmail" placeholder="Correo electrónico">
-                </div>
-                
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="regPassword" placeholder="Contraseña">
-                </div>
-
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="regConfirmPassword" placeholder="Confirmar contraseña">
-                </div>
-                
-                <button class="login-btn" onclick="register()">
-                    <i class="fas fa-user-plus"></i> Registrarse
-                </button>
-                
-                <div class="register-link">
-                    <i class="fas fa-arrow-left"></i> <a onclick="showLogin()">Volver al inicio de sesión</a>
-                </div>
-            </div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">XenturyAI</div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Cargando...</div>
         </div>
     </div>
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h3><i class="fas fa-history"></i> Historial</h3>
-            <button class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+            <button class="new-chat-btn" onclick="createNewChat()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+                Nuevo chat
+            </button>
+            <button class="close-sidebar" onclick="toggleSidebar()">✕</button>
         </div>
-        
-        <div class="user-info" id="userInfo">
-            <!-- Se llena dinámicamente -->
-        </div>
-        
-        <div class="history-header">
-            <h4><i class="fas fa-comments"></i> Conversaciones</h4>
-            <button class="clear-all-btn" onclick="clearAllHistory()" title="Eliminar todo">
-                <i class="fas fa-trash-alt"></i>
+
+        <!-- Login Section -->
+        <div class="login-section" id="loginSection">
+            <div class="login-title">Iniciar sesión</div>
+            <input type="email" id="email" class="login-input" placeholder="Correo electrónico" value="usuario@ejemplo.com">
+            <input type="password" id="password" class="login-input" placeholder="Contraseña" value="123456">
+            <button class="login-btn" onclick="login()">
+                <span>Continuar</span>
             </button>
         </div>
-        
-        <div id="historyList">
-            <!-- Los items del historial se agregarán dinámicamente -->
+
+        <!-- User Info (hidden) -->
+        <div id="userInfo" class="user-info" style="display: none;">
+            <span class="user-email" id="userEmail"></span>
+            <button class="logout-btn" onclick="logout()">Salir</button>
         </div>
-        
-        <button class="logout-btn" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-        </button>
+
+        <!-- History Section -->
+        <div class="history-section">
+            <div class="history-title">Historial de chats</div>
+            <div id="historyList"></div>
+        </div>
     </div>
 
-    <!-- Main Chat Container -->
-    <div class="chat-container" id="chatContainer">
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
         <!-- Header -->
-        <div class="chat-header">
-            <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-            <div class="logo">
-                <i class="fas fa-robot logo-icon"></i>
-                <div>
-                    <h1>Xentury AI</h1>
-                    <span><i class="fas fa-microchip"></i> Impulsado por Xentury 2.1</span>
-                </div>
-            </div>
+        <div class="header">
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                </svg>
+            </button>
+            <div class="header-title">XenturyAI</div>
+            <div class="model-badge">XentAI 1.3</div>
         </div>
 
-        <!-- Messages Area -->
-        <div class="messages-area" id="messagesArea">
-            <!-- Los mensajes se agregarán dinámicamente -->
+        <!-- Chat Container -->
+        <div class="chat-container" id="chatContainer">
+            <div class="welcome-screen">
+                <div class="welcome-title">XenturyAI</div>
+                <div class="welcome-subtitle">Tu asistente personal con inteligencia artificial</div>
+                <div class="welcome-icons">
+                    <span>✨</span>
+                    <span>🚀</span>
+                    <span>💡</span>
+                </div>
+            </div>
         </div>
 
         <!-- Input Area -->
         <div class="input-area">
             <div class="input-container">
-                <button class="attach-button" id="attachButton">
-                    <i class="fas fa-paperclip"></i>
-                    <input type="file" id="fileInput" class="file-input" multiple onchange="handleFileUpload(this.files)">
-                </button>
-                <textarea 
-                    id="userInput" 
-                    placeholder="Escribe tu mensaje..." 
-                    rows="1"
-                    onkeydown="handleKeyDown(event)"
-                ></textarea>
-                <button class="send-button" id="sendButton" onclick="sendMessage()">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
+                <div class="input-wrapper">
+                    <textarea 
+                        id="userInput" 
+                        placeholder="Envía un mensaje a XenturyAI..."
+                        rows="1"
+                        onkeydown="handleKeyDown(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M2 21L23 12 2 3v7l15 2-15 2v7z"/>
+                        </svg>
+                        Enviar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage"></span>
-    </div>
-
     <script>
-        const API_KEY = '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';
+        // Configuration
+        const API_KEY = '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';
+        const MODEL = 'llama-3.1-8b-instant';
         const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-        
-        let isTyping = false;
+
+        // State
+        let isSidebarOpen = false;
+        let isLoggedIn = false;
         let currentUser = null;
-        let currentChat = [];
-        let users = JSON.parse(localStorage.getItem('users')) || {};
+        let chats = {};
+        let currentChatId = null;
+        let isTyping = false;
 
-        // Usuario por defecto para pruebas
-        if (Object.keys(users).length === 0) {
-            users['admin@xentury.com'] = {
-                nombre: 'Administrador',
-                email: 'admin@xentury.com',
-                password: 'admin123',
-                history: []
-            };
-            localStorage.setItem('users', JSON.stringify(users));
-        }
+        // Hide loading screen after 2 seconds
+        setTimeout(() => {
+            document.getElementById('loadingScreen').style.display = 'none';
+        }, 2000);
 
-        // Elementos del DOM
-        const loginScreen = document.getElementById('loginScreen');
-        const registerScreen = document.getElementById('registerScreen');
-        const sidebar = document.getElementById('sidebar');
-        const chatContainer = document.getElementById('chatContainer');
-        const messagesArea = document.getElementById('messagesArea');
-        const userInput = document.getElementById('userInput');
-        const sendButton = document.getElementById('sendButton');
-        const historyList = document.getElementById('historyList');
-        const userInfo = document.getElementById('userInfo');
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toastMessage');
-
-        function showToast(message, icon = 'check-circle') {
-            toastMessage.textContent = message;
-            toast.querySelector('i').className = `fas fa-${icon}`;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        function showRegister() {
-            loginScreen.style.display = 'none';
-            registerScreen.style.display = 'flex';
-        }
-
-        function showLogin() {
-            registerScreen.style.display = 'none';
-            loginScreen.style.display = 'flex';
-        }
-
-        function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            users = JSON.parse(localStorage.getItem('users')) || {};
-            
-            if (users[email] && users[email].password === password) {
-                currentUser = users[email];
-                currentUser.email = email;
-                loginScreen.style.display = 'none';
-                updateUserInfo();
-                loadUserHistory();
-                messagesArea.innerHTML = '';
-                addMessage('¡Hola! Soy Xentury AI, tu asistente inteligente. ¿En qué puedo ayudarte hoy?', 'ai');
-                showToast(`Bienvenido ${currentUser.nombre}`, 'user-check');
-            } else {
-                alert('Credenciales incorrectas');
-            }
-        }
-
-        function register() {
-            const nombre = document.getElementById('regNombre').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            const confirmPassword = document.getElementById('regConfirmPassword').value;
-            
-            if (!nombre || !email || !password) {
-                alert('Por favor completa todos los campos');
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                alert('Las contraseñas no coinciden');
-                return;
-            }
-            
-            users = JSON.parse(localStorage.getItem('users')) || {};
-            
-            if (users[email]) {
-                alert('El correo ya está registrado');
-                return;
-            }
-            
-            users[email] = {
-                nombre: nombre,
-                email: email,
-                password: password,
-                history: []
-            };
-            
-            localStorage.setItem('users', JSON.stringify(users));
-            showToast('Registro exitoso. Ahora puedes iniciar sesión', 'user-plus');
-            showLogin();
-        }
-
-        function logout() {
-            currentUser = null;
-            currentChat = [];
-            messagesArea.innerHTML = '';
-            loginScreen.style.display = 'flex';
-            registerScreen.style.display = 'none';
-            toggleSidebar();
-            showToast('Sesión cerrada', 'power-off');
-        }
-
-        function updateUserInfo() {
+        // Load chats from localStorage
+        function loadChats() {
             if (currentUser) {
-                userInfo.innerHTML = `
-                    <div class="user-avatar">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="user-details">
-                        <h4>${currentUser.nombre}</h4>
-                        <p><i class="fas fa-envelope"></i> ${currentUser.email}</p>
-                    </div>
-                `;
+                const savedChats = localStorage.getItem(`chats_${currentUser}`);
+                if (savedChats) {
+                    chats = JSON.parse(savedChats);
+                } else {
+                    chats = {};
+                }
+                renderHistory();
+                
+                if (Object.keys(chats).length > 0) {
+                    currentChatId = Object.keys(chats)[0];
+                    renderMessages();
+                }
             }
         }
 
-        function toggleSidebar() {
-            sidebar.classList.toggle('open');
-            chatContainer.classList.toggle('shifted');
-        }
-
-        function handleKeyDown(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendMessage();
+        // Save chats to localStorage
+        function saveChats() {
+            if (currentUser) {
+                localStorage.setItem(`chats_${currentUser}`, JSON.stringify(chats));
             }
         }
 
-        function handleFileUpload(files) {
-            for (let file of files) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    if (file.type.startsWith('image/')) {
-                        addImageMessage(e.target.result, 'user');
-                    } else {
-                        addFileMessage(file.name, 'user');
-                    }
-                };
-                reader.readAsDataURL(file);
+        // Create new chat
+        function createNewChat() {
+            if (!isLoggedIn) {
+                alert('Por favor, inicia sesión primero');
+                toggleSidebar();
+                return;
             }
-            showToast(`${files.length} archivo(s) adjuntado(s)`, 'paperclip');
-        }
 
-        function addImageMessage(imageData, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
+            const chatId = Date.now().toString();
+            const now = new Date();
+            const title = `Chat ${now.toLocaleDateString()} ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
             
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar';
-            avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+            chats[chatId] = {
+                id: chatId,
+                title: title,
+                messages: [],
+                createdAt: now.toISOString()
+            };
             
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.innerHTML = `<img src="${imageData}" alt="Imagen" style="max-width: 100%; max-height: 300px; border-radius: 8px;">`;
+            currentChatId = chatId;
+            saveChats();
+            renderHistory();
             
-            if (sender === 'user') {
-                messageDiv.appendChild(contentDiv);
-                messageDiv.appendChild(avatar);
-            } else {
-                messageDiv.appendChild(avatar);
-                messageDiv.appendChild(contentDiv);
-            }
-            
-            messagesArea.appendChild(messageDiv);
-            messagesArea.scrollTop = messagesArea.scrollHeight;
-        }
-
-        function addFileMessage(fileName, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
-            
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar';
-            avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.innerHTML = `
-                <div class="file-attachment" onclick="window.open(this.dataset.file)">
-                    <i class="fas fa-file-alt"></i>
-                    <span>${fileName}</span>
-                    <i class="fas fa-download"></i>
+            // Clear chat container
+            document.getElementById('chatContainer').innerHTML = `
+                <div class="welcome-screen">
+                    <div class="welcome-title">Nuevo chat</div>
+                    <div class="welcome-subtitle">¿En qué puedo ayudarte?</div>
                 </div>
             `;
-            
-            if (sender === 'user') {
-                messageDiv.appendChild(contentDiv);
-                messageDiv.appendChild(avatar);
-            } else {
-                messageDiv.appendChild(avatar);
-                messageDiv.appendChild(contentDiv);
-            }
-            
-            messagesArea.appendChild(messageDiv);
-            messagesArea.scrollTop = messagesArea.scrollHeight;
         }
 
-        async function sendMessage() {
-            const message = userInput.value.trim();
-            if (!message || isTyping || !currentUser) return;
-
-            addMessage(message, 'user');
-            userInput.value = '';
-            autoResizeTextarea();
-
-            showTypingIndicator();
-
-            try {
-                const response = await getAIResponse(message);
-                hideTypingIndicator();
-                await typeMessage(response);
-                
-                saveToHistory(message, response);
-            } catch (error) {
-                hideTypingIndicator();
-                addMessage('Lo siento, hubo un error al procesar tu mensaje. Por favor, intenta de nuevo.', 'ai');
-                console.error('Error:', error);
+        // Delete chat
+        function deleteChat(chatId, event) {
+            event.stopPropagation();
+            if (chats[chatId]) {
+                delete chats[chatId];
+                if (currentChatId === chatId) {
+                    currentChatId = Object.keys(chats)[0] || null;
+                    if (currentChatId) {
+                        renderMessages();
+                    } else {
+                        showWelcomeScreen();
+                    }
+                }
+                saveChats();
+                renderHistory();
             }
         }
 
-        function addMessage(content, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
+        // Load chat
+        function loadChat(chatId) {
+            currentChatId = chatId;
+            renderMessages();
             
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar';
-            avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.textContent = content;
-            
-            if (sender === 'user') {
-                messageDiv.appendChild(contentDiv);
-                messageDiv.appendChild(avatar);
-            } else {
-                messageDiv.appendChild(avatar);
-                messageDiv.appendChild(contentDiv);
+            // Close sidebar on mobile
+            if (window.innerWidth <= 768) {
+                toggleSidebar();
             }
-            
-            messagesArea.appendChild(messageDiv);
-            messagesArea.scrollTop = messagesArea.scrollHeight;
-            
-            currentChat.push({ role: sender === 'user' ? 'user' : 'assistant', content });
         }
 
-        function showTypingIndicator() {
-            isTyping = true;
-            sendButton.disabled = true;
-            
-            const indicator = document.createElement('div');
-            indicator.className = 'message ai';
-            indicator.id = 'typingIndicator';
-            
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar';
-            avatar.innerHTML = '<i class="fas fa-robot"></i>';
-            
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'loading';
-            loadingDiv.innerHTML = '<span></span><span></span><span></span>';
-            
-            indicator.appendChild(avatar);
-            indicator.appendChild(loadingDiv);
-            
-            messagesArea.appendChild(indicator);
-            messagesArea.scrollTop = messagesArea.scrollHeight;
+        // Show welcome screen
+        function showWelcomeScreen() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = `
+                <div class="welcome-screen">
+                    <div class="welcome-title">XenturyAI</div>
+                    <div class="welcome-subtitle">Tu asistente personal con inteligencia artificial</div>
+                    <div class="welcome-icons">
+                        <span>✨</span>
+                        <span>🚀</span>
+                        <span>💡</span>
+                    </div>
+                </div>
+            `;
         }
 
-        function hideTypingIndicator() {
-            const indicator = document.getElementById('typingIndicator');
-            if (indicator) {
-                indicator.remove();
-            }
-            isTyping = false;
-            sendButton.disabled = false;
-        }
-
-        async function typeMessage(message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message ai';
-            
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar';
-            avatar.innerHTML = '<i class="fas fa-robot"></i>';
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.id = 'typingMessage';
-            
-            messageDiv.appendChild(avatar);
-            messageDiv.appendChild(contentDiv);
-            messagesArea.appendChild(messageDiv);
-            
-            for (let i = 0; i <= message.length; i++) {
-                contentDiv.textContent = message.substring(0, i);
-                contentDiv.classList.add('typing');
-                messagesArea.scrollTop = messagesArea.scrollHeight;
-                await new Promise(resolve => setTimeout(resolve, 30));
-            }
-            
-            contentDiv.classList.remove('typing');
-            currentChat.push({ role: 'assistant', content: message });
-        }
-
-        async function getAIResponse(userMessage) {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${API_KEY}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    model: 'llama-3.1-8b-instant',
-                    messages: [
-                        { role: 'system', content: 'Eres Xentury AI, un asistente amigable y útil, responde corto y breve.' },
-                        ...currentChat,
-                        { role: 'user', content: userMessage }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 1024
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Error en la API');
-            }
-
-            const data = await response.json();
-            return data.choices[0].message.content;
-        }
-
-        function saveToHistory(userMessage, aiResponse) {
-            if (!currentUser) return;
-            
-            const chatItem = {
-                id: Date.now(),
-                timestamp: new Date().toLocaleString(),
-                userMessage: userMessage.substring(0, 50) + (userMessage.length > 50 ? '...' : ''),
-                fullChat: [...currentChat]
-            };
-            
-            users[currentUser.email].history.unshift(chatItem);
-            
-            if (users[currentUser.email].history.length > 50) {
-                users[currentUser.email].history.pop();
-            }
-            
-            localStorage.setItem('users', JSON.stringify(users));
-            loadUserHistory();
-        }
-
-        function loadUserHistory() {
-            if (!currentUser) return;
-            
+        // Render history
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
             historyList.innerHTML = '';
-            
-            const userHistory = users[currentUser.email].history || [];
-            
-            if (userHistory.length === 0) {
-                historyList.innerHTML = '<div class="history-item"><div class="history-item-text"><p><i class="fas fa-inbox"></i> No hay historial disponible</p></div></div>';
+
+            if (!isLoggedIn) {
+                historyList.innerHTML = '<div style="color: #666; text-align: center; padding: 20px; font-size: 14px;">Inicia sesión para ver tu historial</div>';
                 return;
             }
-            
-            userHistory.forEach(item => {
+
+            const sortedChats = Object.values(chats).sort((a, b) => 
+                new Date(b.createdAt) - new Date(a.createdAt)
+            );
+
+            if (sortedChats.length === 0) {
+                historyList.innerHTML = '<div style="color: #666; text-align: center; padding: 20px; font-size: 14px;">No hay chats guardados</div>';
+                return;
+            }
+
+            sortedChats.forEach(chat => {
                 const historyItem = document.createElement('div');
-                historyItem.className = 'history-item';
-                
+                historyItem.className = `history-item ${currentChatId === chat.id ? 'active' : ''}`;
                 historyItem.innerHTML = `
-                    <div class="history-item-content">
-                        <div class="history-item-text" onclick="loadChat(${item.id})">
-                            <p><i class="fas fa-message"></i> ${item.userMessage}</p>
-                            <small><i class="far fa-clock"></i> ${item.timestamp}</small>
-                        </div>
-                        <button class="delete-chat-btn" onclick="deleteChat(${item.id}, event)">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+                    <span class="history-icon">💬</span>
+                    <span class="history-title-text" onclick="loadChat('${chat.id}')">${chat.title}</span>
+                    <button class="delete-history" onclick="deleteChat('${chat.id}', event)">🗑️</button>
                 `;
-                
                 historyList.appendChild(historyItem);
             });
         }
 
-        function loadChat(chatId) {
-            if (!currentUser) return;
-            
-            const chat = users[currentUser.email].history.find(item => item.id === chatId);
-            
-            if (chat) {
-                currentChat = chat.fullChat || [];
-                messagesArea.innerHTML = '';
-                
-                currentChat.forEach(msg => {
-                    addMessage(msg.content, msg.role === 'user' ? 'user' : 'ai');
+        // Render messages
+        function renderMessages() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = '';
+
+            if (currentChatId && chats[currentChatId]) {
+                const messages = chats[currentChatId].messages;
+                messages.forEach(msg => {
+                    addMessageToUI(msg.role, msg.content, false);
                 });
-                showToast('Conversación cargada', 'folder-open');
-            }
-            
-            toggleSidebar();
-        }
-
-        function deleteChat(chatId, event) {
-            event.stopPropagation();
-            
-            if (!currentUser) return;
-            
-            users[currentUser.email].history = users[currentUser.email].history.filter(item => item.id !== chatId);
-            localStorage.setItem('users', JSON.stringify(users));
-            loadUserHistory();
-            showToast('Chat eliminado', 'trash-alt');
-        }
-
-        function clearAllHistory() {
-            if (!currentUser) return;
-            
-            if (confirm('¿Eliminar todo el historial?')) {
-                users[currentUser.email].history = [];
-                localStorage.setItem('users', JSON.stringify(users));
-                loadUserHistory();
-                showToast('Historial eliminado', 'trash-alt');
             }
         }
 
-        function autoResizeTextarea() {
-            userInput.style.height = 'auto';
-            userInput.style.height = userInput.scrollHeight + 'px';
+        // Add message to UI
+        function addMessageToUI(role, content, animate = false) {
+            const chatContainer = document.getElementById('chatContainer');
+            
+            // Remove welcome screen if exists
+            if (chatContainer.querySelector('.welcome-screen')) {
+                chatContainer.innerHTML = '';
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            const avatar = document.createElement('div');
+            avatar.className = `message-avatar ${role}`;
+            avatar.textContent = role === 'user' ? '👤' : '🤖';
+            
+            const textDiv = document.createElement('div');
+            textDiv.className = 'message-text';
+            
+            contentDiv.appendChild(avatar);
+            contentDiv.appendChild(textDiv);
+            messageDiv.appendChild(contentDiv);
+            chatContainer.appendChild(messageDiv);
+            
+            if (animate && role === 'assistant') {
+                // Animate letter by letter
+                typeText(textDiv, content);
+            } else {
+                textDiv.textContent = content;
+            }
+            
+            // Scroll to bottom with smooth animation
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
         }
 
-        userInput.addEventListener('input', autoResizeTextarea);
+        // Type text letter by letter
+        function typeText(element, text) {
+            let index = 0;
+            element.innerHTML = '';
+            
+            function typeNextLetter() {
+                if (index < text.length) {
+                    const letter = document.createElement('span');
+                    letter.className = 'letter';
+                    letter.textContent = text[index];
+                    letter.style.animationDelay = `${index * 0.02}s`;
+                    element.appendChild(letter);
+                    index++;
+                    
+                    // Scroll while typing
+                    const chatContainer = document.getElementById('chatContainer');
+                    chatContainer.scrollTo({
+                        top: chatContainer.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                    
+                    setTimeout(typeNextLetter, 25);
+                } else {
+                    isTyping = false;
+                    document.getElementById('sendBtn').disabled = false;
+                    document.getElementById('userInput').disabled = false;
+                }
+            }
+            
+            typeNextLetter();
+        }
 
-        // Inicializar
-        autoResizeTextarea();
+        // Send message to API
+        async function sendToAPI(messages) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: MODEL,
+                        messages: messages,
+                        temperature: 0.7,
+                        max_tokens: 1024
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la API');
+                }
+
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                console.error('Error:', error);
+                return 'Lo siento, hubo un error al procesar tu mensaje.';
+            }
+        }
+
+        // Send message
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+
+            if (!message || isTyping || !isLoggedIn) {
+                if (!isLoggedIn) {
+                    alert('Por favor, inicia sesión primero');
+                    toggleSidebar();
+                }
+                return;
+            }
+
+            // Clear input
+            input.value = '';
+            input.style.height = 'auto';
+
+            // Create new chat if none exists
+            if (!currentChatId) {
+                createNewChat();
+            }
+
+            // Remove welcome screen
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            if (welcomeScreen) {
+                welcomeScreen.remove();
+            }
+
+            // Add user message to UI
+            addMessageToUI('user', message);
+            
+            // Save to history
+            chats[currentChatId].messages.push({
+                role: 'user',
+                content: message
+            });
+            saveChats();
+
+            // Prepare messages for API
+            const apiMessages = [
+                {
+                    role: 'system',
+                    content: 'Eres XenturyAI, un asistente creado por Carlos. Responde de manera corta y concisa. Si te preguntan quién te creó, responde que fue Carlos.'
+                },
+                ...chats[currentChatId].messages.map(msg => ({
+                    role: msg.role,
+                    content: msg.content
+                }))
+            ];
+
+            // Show typing indicator
+            isTyping = true;
+            document.getElementById('sendBtn').disabled = true;
+            document.getElementById('userInput').disabled = true;
+
+            // Add typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message assistant';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-avatar assistant">🤖</div>
+                    <div class="message-text">
+                        <div class="typing-indicator">
+                            <span class="typing-dot"></span>
+                            <span class="typing-dot"></span>
+                            <span class="typing-dot"></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('chatContainer').appendChild(typingDiv);
+            document.getElementById('chatContainer').scrollTo({
+                top: document.getElementById('chatContainer').scrollHeight,
+                behavior: 'smooth'
+            });
+
+            // Get response from API
+            const response = await sendToAPI(apiMessages);
+
+            // Remove typing indicator
+            document.getElementById('typingIndicator')?.remove();
+
+            // Add assistant message to UI with animation
+            addMessageToUI('assistant', response, true);
+
+            // Save to history
+            chats[currentChatId].messages.push({
+                role: 'assistant',
+                content: response
+            });
+            saveChats();
+        }
+
+        // Toggle sidebar
+        function toggleSidebar() {
+            isSidebarOpen = !isSidebarOpen;
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('mainContent').classList.toggle('shifted');
+        }
+
+        // Login function
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email && password) {
+                isLoggedIn = true;
+                currentUser = email;
+                
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('userInfo').style.display = 'flex';
+                document.getElementById('userEmail').textContent = email;
+                
+                loadChats();
+                
+                if (Object.keys(chats).length === 0) {
+                    createNewChat();
+                }
+                
+                // Show success animation
+                const btn = event.target;
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+
+        // Logout function
+        function logout() {
+            isLoggedIn = false;
+            currentUser = null;
+            chats = {};
+            currentChatId = null;
+            
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('userInfo').style.display = 'none';
+            showWelcomeScreen();
+            renderHistory();
+        }
+
+        // Handle key down
+        function handleKeyDown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+                
+                // Button animation
+                const btn = document.getElementById('sendBtn');
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+
+        // Auto-resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+        }
+
+        // Initialize
+        window.onload = function() {
+            renderHistory();
+        };
     </script>
 </body>
 </html>
-
